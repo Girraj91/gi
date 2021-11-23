@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .worldForm {
+        width: 250px;
+        background: #ae82af;
+        border: 1px solid #e4e4e4;
+        border-radius: 4px;
+        padding: 20px;
+        margin-left: 475px;
+        margin-top: 225px;
+
+    }
+
+    .lists {
+        margin-bottom: 20px;
+    }
+</style>
+
+<body>
+    <form class="worldForm">
+        <div class="lists">
+            <label>Select Country:</label>
+            <select name="country" id="countyList">
+                <option value="" selected="selected">Select Country</option>
+            </select>
+        </div>
+        <div class="lists">
+            <label>Select State:</label>
+            <select name="state" id="stateList">
+                <option value="" selected="selected">Select State</option>
+            </select>
+        </div>
+        <div class="lists">
+            <label>Select City:</label>
+            <select name="city" id="cityList">
+                <option value="" selected="selected">Select City</option>
+            </select>
+        </div>
+    </form>  <script>
+        var jsonData = {
+            USA: {
+                California: ["Los Angeles", "San Diego", "Sacramento"],
+                Texas: ["Houston", "Austin"],
+                Florida: ["Miami", "Orlando", "Tampa"],
+            },
+            India: {
+                Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+                TamilNadu: ["Chennai", "Madurai"],
+                Karnataka: ["Bangalore", "Mangalore"],
+            },
+            Canada: {
+                Alberta: ["Calgary", "Edmonton", "Red Deer"],
+                BritishColumbia: ["Vancouver", "Kelowna"],
+                Manitoba: ["Winnipeg", "Brandon"],
+            },
+            Germany: {
+                Bavaria: ["Munich", "Nuremberg"],
+                NorthRhine: ["Cologne", "Düsseldorf"],
+            },
+        };
+        window.onload = function () {
+            var countylist = document.getElementById("countylist");
+            statelist = document.getElementById("statelist");
+            citylist = document.getElementById("citylist");
+            for (var country in jsonData) {
+                countyList.options[countyList.options.length] = new Option(country, country);
+            }
+            countyList.onchange = function () {
+                stateList.length = 1;
+                cityList.length = 1;
+                if (this.selectedIndex < 1) return;
+                for (var state in jsonData[this.value]) {
+                    stateList.options[stateList.options.length] = new Option(state, state);
+                }
+            };
+            countyList.onchange();
+            stateList.onchange = function () {
+                cityList.length = 1;
+                if (this.selectedIndex < 1) return;
+                var city = jsonData[countyList.value][this.value];
+                for (var i = 0; i < city.length; i++) {
+                    cityList.options[cityList.options.length] = new Option(city[i], city[i]);
+                }
+            };
+        }
+
+     
+    </script>
+</body>
+
+</html>
